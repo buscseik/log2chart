@@ -555,9 +555,43 @@ $DataLines
 
 function Convert-Log2Chart
 {
+<#
+   
+.DESCRIPTION
+   This module give tools to generate html based log report from iperf or ping logs.
+
+   Following log types can be converted to html based log report:
+   Iperf:
+        [  5]   7.00-8.00   sec  7.47 MBytes  62.6 Mbits/sec                  
+        [  5]   8.00-9.00   sec  7.17 MBytes  60.2 Mbits/sec  
+    Linux:
+        64 bytes from 8.8.8.8: icmp_seq=1 ttl=56 time=16.0 ms
+        64 bytes from 8.8.8.8: icmp_seq=2 ttl=56 time=14.8 ms
+    Windows:
+        Reply from 8.8.8.8: bytes=32 time=48ms TTL=45
+        Reply from 8.8.8.8: bytes=32 time=47ms TTL=45
+    WindowsWithDate:
+        07.07.2017-15:16:57> Reply from 8.8.8.8: bytes=32 time=48ms TTL=45
+        07.07.2017-15:16:58> Reply from 8.8.8.8: bytes=32 time=47ms TTL=45
+
+.PARAMETER FileTemplate 
+   Files that match on this wildcard pattern will be included in generated report.
+
+.PARAMETER ReportName  
+    Name of the generated report.
+
+.PARAMETER LogType
+    Four type of log can be accapted: Iperf, Linux, Windows and WindowsWithDate
+
+
+.EXAMPLE
+    Convert-Log2Chart -FileTemplate Test*ping.txt -ReportName OutPutReportName -LogType WindowsWithDate
+
+
+#>
     param($FileTemplate, $ListOfFiles, $ReportName,
         [ValidateSet('Windows','WindowsWithDate','Linux', 'Iperf')]
-        [Parameter(Mandatory=$false, HelpMessage="Option to choose between Log types.")]
+        [Parameter(Mandatory=$true, HelpMessage="Option to choose between Log types.")]
         [string]$LogType="Windows"
     )
     
