@@ -1,5 +1,5 @@
 # log2chart
-This module give tools to generate html based log report from iperf or ping logs.
+This module gives tools to generate html based log report from iperf or ping logs.
 
 
 ### Installation
@@ -41,7 +41,7 @@ E.g.: Test*.PingLog.txt
 List of file object.
 E.g.: $(ls | Where-Object {$_.Name -like "log*.pinglog.txt"} )
 * ReportName:
-Define name of the generated report.
+Defines the name of the generated report.
 * Logtype:
-There are four option to choose: Iperf, Linux, Windows and WindowsWithDate.
-Make sure select the corresponding option.
+There are four options to choose from: Iperf, Linux, Windows and WindowsWithDate.
+Make sure to select the corresponding option.
