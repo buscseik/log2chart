@@ -248,10 +248,20 @@ function Generate-DataWithDefinition()
     param($listOfName,
         [ValidateSet('Windows','WindowsWithDate','Linux','Iperf')]
         [Parameter(Mandatory=$false, HelpMessage="Option to choose between Log types.")]
-        [string]$LogType="Windows"
+        [string]$LogType="Windows",
+        $ChartIndex
     )
+
     $Output=""
-    $counter=0
+    if($ChartIndex -ne $null)
+    {
+        $counter=$ChartIndex
+
+    }
+    else
+    {    
+        $counter=0
+    }
     
     
     #Set correct ping template
@@ -319,12 +329,18 @@ var graph$counter = new links.Graph(document.getElementById('mygraph$counter'));
 function Generate-Target()
 {
 
-
-
-
-    param($listOfName)
+    param($listOfName, $index)
     $Output=""
-    $counter=0
+    if($index -ne $null)
+    {
+        $counter=$index
+    }
+    else
+    {
+        $counter=0
+    }
+
+
     foreach ($nextName in $listOfName)
     {
         $Output+=@"
@@ -359,9 +375,16 @@ function Generate-HTMLChartInitiator()
 
 
 
-    param($listOfName)
+    param($listOfName, $ChartIndex)
     $Output=""
-    $counter=0
+    if($ChartIndex -ne $null)
+    {
+        $counter=$ChartIndex
+    }
+    else
+    {
+        $counter=0
+    }
     foreach ($nextName in $listOfName)
     {
         $Output+=@"
@@ -633,7 +656,56 @@ function Convert-Log2Chart
     $GeneratedHtml | Out-File $ReportName -Encoding utf8
 }
 
+function Convert-Log2ConverterObject
+{
+    <#
+   
+.DESCRIPTION
+   This module give tools to generate a raw object that can be used by external modules to help generate html based report.
+
+   Following log types can be converted to html based log report:
+   Iperf:
+        [  5]   7.00-8.00   sec  7.47 MBytes  62.6 Mbits/sec                  
+        [  5]   8.00-9.00   sec  7.17 MBytes  60.2 Mbits/sec  
+    Linux:
+        64 bytes from 8.8.8.8: icmp_seq=1 ttl=56 time=16.0 ms
+        64 bytes from 8.8.8.8: icmp_seq=2 ttl=56 time=14.8 ms
+    Windows:
+        Reply from 8.8.8.8: bytes=32 time=48ms TTL=45
+        Reply from 8.8.8.8: bytes=32 time=47ms TTL=45
+    WindowsWithDate:
+        07.07.2017-15:16:57> Reply from 8.8.8.8: bytes=32 time=48ms TTL=45
+        07.07.2017-15:16:58> Reply from 8.8.8.8: bytes=32 time=47ms TTL=45
+
+.PARAMETER LogFile 
+   Defines the input log file
+
+.PARAMETER ChartIndex  
+    Defines the ChartIndex in case if more than one chart will be generated.
+
+.PARAMETER LogType
+    Four type of log can be accapted: Iperf, Linux, Windows and WindowsWithDate
 
 
-#=====================================Multi Ping=============================================
+.EXAMPLE
+    Convert-Log2ConverterObject -LogFile $file -ChartIndex 1 -LogType Linux
+
+
+#>
+    param($LogFile,$ChartIndex,
+        [ValidateSet('Windows','WindowsWithDate','Linux', 'Iperf')]
+        [Parameter(Mandatory=$true, HelpMessage="Option to choose between Log types.")]
+        [string]$LogType="Windows"
+    )
+        
+    $divTarget=Generate-Target -listOfName $LogFile -index $ChartIndex
+    $Data=Generate-DataWithDefinition -listOfName $LogFile -LogType $LogType -ChartIndex $ChartIndex
+    $Initiator=Generate-HTMLChartInitiator $LogFile -ChartIndex $ChartIndex
+    
+    [pscustomobject]@{ChartTarget=$divTarget; ChartData=$Data;Initiator=$Initiator}
+    
+}
+
+
+
 

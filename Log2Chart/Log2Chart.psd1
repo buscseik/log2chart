@@ -2,7 +2,7 @@
 RootModule="Log2Chart.psm1"
 GUID="488127aa-8772-4319-9a62-31c726c09d1a"
 Author="Krisztian Buscsei"
-ModuleVersion="1.1"
+ModuleVersion="1.2"
 Description="This module give tools to generate html based graphs from iperf or ping logs."
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess

@@ -6,5 +6,6 @@
 
 #region export module member
 export-modulemember -function Convert-Log2Chart
+export-modulemember -function Convert-Log2ConverterObject
 
 #endregion export module member
