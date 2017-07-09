@@ -22,10 +22,10 @@ PrivateData = @{
         #IconUri = "http://pesterbdd.com/images/Pester.png"
 
         # The web address of this module's project or support homepage.
-        ProjectUri = "https://bitbucket.org/buscseik/log2chart"
+        ProjectUri = "https://github.com/buscseik/log2chart/"
 
         # The web address of this module's license. Points to a page that's embeddable and linkable.
-        LicenseUri = "https://github.com/dfinke/InstallModuleFromGitHub/blob/master/LICENSE.txt"
+        LicenseUri = "https://github.com/buscseik/log2chart/blob/master/LICENSE"
 
         # Release notes for this particular version of the module
         #ReleaseNotes = $True
