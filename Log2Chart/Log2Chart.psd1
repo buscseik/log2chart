@@ -13,7 +13,7 @@ PrivateData = @{
     # https://connect.microsoft.com/PowerShell/feedback/details/421837
     PSData = @{
         # The primary categorization of this module (from the TechNet Gallery tech tree).
-        Category = "This module give tools to generate html based graphs from iperf or ping logs."
+        #Category = ""
 
         # Keyword tags to help users find this module via navigations and search.
         Tags = @("Ping","Log","PowerShell","Chart")
